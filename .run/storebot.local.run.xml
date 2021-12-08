@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="storebot.local" type="PhpRemoteDebugRunConfigurationType" factoryName="PHP Remote Debug" singleton="false" filter_connections="NOT_FILTER" server_name="slavebot">
+    <method v="2">
+      <option name="LaunchBrowser.Before.Run" url="storebot.local" withDebugger="true" />
+    </method>
+  </configuration>
+</component>
