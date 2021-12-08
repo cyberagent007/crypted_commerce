@@ -38,6 +38,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $password;
 
+    /**
+     * @var int The balance amount of user
+     * @ORM\Column(type="integer")
+     */
+    private $balance = 0;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -111,6 +117,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getSalt(): ?string
     {
         return null;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBalance(): int
+    {
+        return $this->balance;
+    }
+
+    /**
+     * @param int $balance
+     * @return User
+     */
+    public function setBalance(int $balance): User
+    {
+        $this->balance = $balance;
+        return $this;
     }
 
     /**
