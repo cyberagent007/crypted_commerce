@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -43,6 +45,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="integer")
      */
     private $balance = 0;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Secret::class, mappedBy="created_by")
+     */
+    private $secrets;
+
+    public function __construct()
+    {
+        $this->secrets = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -144,5 +156,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|Secret[]
+     */
+    public function getSecrets(): Collection
+    {
+        return $this->secrets;
+    }
+
+    public function addSecret(Secret $secret): self
+    {
+        if (!$this->secrets->contains($secret)) {
+            $this->secrets[] = $secret;
+            $secret->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSecret(Secret $secret): self
+    {
+        if ($this->secrets->removeElement($secret)) {
+            // set the owning side to null (unless already changed)
+            if ($secret->getCreatedBy() === $this) {
+                $secret->setCreatedBy(null);
+            }
+        }
+
+        return $this;
     }
 }
