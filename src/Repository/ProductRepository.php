@@ -2,9 +2,8 @@
 
 namespace App\Repository;
 
-use App\Entity\Package;
+use App\Entity\City;
 use App\Entity\Product;
-use App\Entity\Secret;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,22 +20,20 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    // /**
-    //  * @return Product[] Returns an array of Product objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Product[] Returns an array of Product objects
+     */
+    public function findByCity(City $city)
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
+            ->setParameter('val', $city)
             ->orderBy('p.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Product

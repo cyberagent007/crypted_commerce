@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello StoreController!{% endblock %}
+
+{% block body %}
+
+{% for city in cities %}
+  <div class="card-body">
+    <a href="{{ url('store', {"id":city.id}) }}">{{ city.name }}</a>
+  </div>
+{% endfor %}
+{% endblock %}
