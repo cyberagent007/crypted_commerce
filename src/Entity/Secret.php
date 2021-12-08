@@ -61,6 +61,11 @@ class Secret
      */
     private $district_id;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $detailed_photo;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -158,6 +163,18 @@ class Secret
     public function setDistrictId(?District $district_id): self
     {
         $this->district_id = $district_id;
+
+        return $this;
+    }
+
+    public function getDetailedPhoto(): ?string
+    {
+        return $this->detailed_photo;
+    }
+
+    public function setDetailedPhoto(string $detailed_photo): self
+    {
+        $this->detailed_photo = $detailed_photo;
 
         return $this;
     }
