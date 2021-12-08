@@ -1,5 +1,6 @@
 /.idea/
 .env
+/public/images
 
 
 ###> symfony/framework-bundle ###

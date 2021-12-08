@@ -8,6 +8,10 @@
         <h2>Sorry, now any product isn't available. Please check later</h2>
     </div>
   {% else %}
+    {% for product in products %}
+      <a href="{{ url('view_product', {id:product.id}) }}">{{ product.name }}</a>
+    {% endfor %}
+
     <div class="col mb-5">
       <div class="card h-100">
         <!-- Sale badge-->
