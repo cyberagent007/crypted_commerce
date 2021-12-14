@@ -10,9 +10,10 @@ class PackageFixtures extends Fixture
 {
     private $sizesData = [
         1,
+        2,
         3,
         5,
-        10
+        10,
     ];
 
     public function load(ObjectManager $manager): void

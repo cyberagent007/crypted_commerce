@@ -6,12 +6,16 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Money\Currency;
+use Money\Money;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  */
 class Product
 {
+    const CURRENCY_CODE='UAH';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -46,6 +50,9 @@ class Product
 
     public function __construct()
     {
+        $this->name = '';
+        $this->description = '';
+        $this->price = 0;
         $this->secrets = new ArrayCollection();
     }
 
@@ -120,14 +127,20 @@ class Product
         return $this;
     }
 
-    public function getPrice(): ?int
+    public function getPriceAmount(): int
     {
         return $this->price;
+
     }
 
-    public function setPrice(int $price): self
+    public function getPrice(): Money
     {
-        $this->price = $price;
+        return new Money($this->price, new Currency(self::CURRENCY_CODE));
+    }
+
+    public function setPrice(Money $price): self
+    {
+        $this->price = $price->getAmount();
 
         return $this;
     }
