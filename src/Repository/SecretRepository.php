@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\City;
 use App\Entity\Secret;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,6 +18,15 @@ class SecretRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Secret::class);
+    }
+
+    public function findAllSecretsByCity(City $city)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.city_id = :city')
+            ->setParameter('city', $city->getId())
+            ->getQuery()
+            ->getResult();
     }
 
 

@@ -35,15 +35,19 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
 
-    /*
-    public function findOneBySomeField($value): ?Product
+
+    public function findAllByAvailableSecrets($secrets)
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $productsCollection = [];
+
+        foreach ($secrets as $secret) {
+            if (in_array($secret->getProduct(), $productsCollection)) {
+                continue;
+            }
+
+            $productsCollection[] = $secret->getProduct();
+        }
+
+        return $productsCollection;
     }
-    */
 }

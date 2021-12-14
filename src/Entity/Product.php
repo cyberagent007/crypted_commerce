@@ -97,7 +97,7 @@ class Product
     {
         if (!$this->secrets->contains($secret)) {
             $this->secrets[] = $secret;
-            $secret->setProductId($this);
+            $secret->setProduct($this);
         }
 
         return $this;
@@ -107,8 +107,8 @@ class Product
     {
         if ($this->secrets->removeElement($secret)) {
             // set the owning side to null (unless already changed)
-            if ($secret->getProductId() === $this) {
-                $secret->setProductId(null);
+            if ($secret->getProduct() === $this) {
+                $secret->setProduct(null);
             }
         }
 

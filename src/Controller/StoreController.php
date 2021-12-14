@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\Product;
 use App\Repository\CityRepository;
 use App\Repository\ProductRepository;
+use App\Repository\SecretRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,10 +18,11 @@ class StoreController extends AbstractController
     private ProductRepository $productRepository;
     private CityRepository $cityRepository;
 
-    public function __construct(ProductRepository $productRepository, CityRepository $cityRepository)
+    public function __construct(ProductRepository $productRepository, CityRepository $cityRepository, SecretRepository  $secretRepository)
     {
         $this->cityRepository = $cityRepository;
         $this->productRepository = $productRepository;
+        $this->secretRepository = $secretRepository;
     }
 
     /**
@@ -28,7 +30,15 @@ class StoreController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        $cityCollection = $this->cityRepository->findNotEmpty();
+        $cityCollection = $this->cityRepository->findAll();
+        $secretRepository = $this->secretRepository;
+        array_filter($cityCollection, function ($city) use ($secretRepository) {
+            if ($secretRepository->findAllSecretsByCity($city) > 1) {
+                return true;
+            }
+
+            return false;
+        });
 
         if (empty($cityCollection)) {
             return $this->render('store/empty.html.twig', []);
@@ -45,10 +55,11 @@ class StoreController extends AbstractController
      */
     public function store(City $city): Response
     {
-        $secretsInCity = $city->getSecrets();
+        $secretCollection = $city->getSecrets();
+        $productCollection = $this->productRepository->findAllByAvailableSecrets($secretCollection);
 
         return $this->render('store/index.html.twig', [
-            'products' => $secretsInCity,
+            'products' => $productCollection,
         ]);
     }
 

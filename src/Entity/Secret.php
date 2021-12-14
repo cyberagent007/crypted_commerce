@@ -77,6 +77,16 @@ class Secret
      */
     private $description;
 
+    public function __construct()
+    {
+        $this->created_at = new \DateTimeImmutable();
+        $this->description = '';
+        $this->detailed_photo = '';
+        $this->photo = '';
+        $this->lat = 0.0;
+        $this->lan = 0.0;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -130,14 +140,14 @@ class Secret
         return $this;
     }
 
-    public function getProductId(): ?Product
+    public function getProduct(): ?Product
     {
         return $this->product_id;
     }
 
-    public function setProductId(?Product $product_id): self
+    public function setProduct(?Product $product): self
     {
-        $this->product_id = $product_id;
+        $this->product_id = $product;
 
         return $this;
     }
