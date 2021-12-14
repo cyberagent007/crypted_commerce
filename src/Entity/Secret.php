@@ -66,6 +66,17 @@ class Secret
      */
     private $detailed_photo;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=City::class, inversedBy="secrets")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $city_id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $description;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -175,6 +186,30 @@ class Secret
     public function setDetailedPhoto(string $detailed_photo): self
     {
         $this->detailed_photo = $detailed_photo;
+
+        return $this;
+    }
+
+    public function getCityId(): ?City
+    {
+        return $this->city_id;
+    }
+
+    public function setCityId(?City $city_id): self
+    {
+        $this->city_id = $city_id;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

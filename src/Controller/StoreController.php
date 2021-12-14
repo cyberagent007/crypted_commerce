@@ -28,7 +28,11 @@ class StoreController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        $cityCollection = $this->cityRepository->findAll();
+        $cityCollection = $this->cityRepository->findNotEmpty();
+
+        if (empty($cityCollection)) {
+            return $this->render('store/empty.html.twig', []);
+        }
 
         return $this->render('store/cities.html.twig', [
             'cities' => $cityCollection,
@@ -37,14 +41,14 @@ class StoreController extends AbstractController
 
     /**
      * @Route("/store/{id}", name="store")
-     * @ParamConverter("city", class="App\Entity\City")
+     * @ParamConverter("id", class="App\Entity\City")
      */
     public function store(City $city): Response
     {
-        $productsCollection = $this->productRepository->findByCity($city);
+        $secretsInCity = $city->getSecrets();
 
         return $this->render('store/index.html.twig', [
-            'products' => $productsCollection,
+            'products' => $secretsInCity,
         ]);
     }
 

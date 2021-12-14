@@ -26,7 +26,7 @@ class ProductRepository extends ServiceEntityRepository
     public function findByCity(City $city)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
+            ->andWhere('p. = :val')
             ->setParameter('val', $city)
             ->orderBy('p.id', 'ASC')
             ->setMaxResults(10)

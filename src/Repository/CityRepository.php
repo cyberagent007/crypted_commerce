@@ -19,6 +19,14 @@ class CityRepository extends ServiceEntityRepository
         parent::__construct($registry, City::class);
     }
 
+    public function findNotEmpty()
+    {
+        $query = $this->createQueryBuilder('c')
+            ->where('COUNT(c.secrets) > 0');
+
+        return $query->getMaxResults();
+    }
+
     // /**
     //  * @return City[] Returns an array of City objects
     //  */
