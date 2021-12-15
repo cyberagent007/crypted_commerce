@@ -124,6 +124,9 @@
     "endroid/qr-code": {
         "version": "3.9.7"
     },
+    "fluffy-factory/user-stats-bundle": {
+        "version": "1.2"
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
     },
@@ -635,6 +638,15 @@
     },
     "symfony/string": {
         "version": "v5.4.0"
+    },
+    "symfony/telegram-notifier": {
+        "version": "5.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "5.0",
+            "ref": "5cf5c19e8fdcbf922de680cdf8d65fa7d77758ae"
+        }
     },
     "symfony/translation": {
         "version": "5.4",
