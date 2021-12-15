@@ -34,20 +34,4 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
-
-    public function findAllByAvailableSecrets($secrets)
-    {
-        $productsCollection = [];
-
-        foreach ($secrets as $secret) {
-            if (in_array($secret->getProduct(), $productsCollection)) {
-                continue;
-            }
-
-            $productsCollection[] = $secret->getProduct();
-        }
-
-        return $productsCollection;
-    }
 }

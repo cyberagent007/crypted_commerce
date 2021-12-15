@@ -63,7 +63,7 @@ class Package
     {
         if (!$this->secrets->contains($secret)) {
             $this->secrets[] = $secret;
-            $secret->setPackageId($this);
+            $secret->setPackage($this);
         }
 
         return $this;
@@ -73,8 +73,8 @@ class Package
     {
         if ($this->secrets->removeElement($secret)) {
             // set the owning side to null (unless already changed)
-            if ($secret->getPackageId() === $this) {
-                $secret->setPackageId(null);
+            if ($secret->getPackage() === $this) {
+                $secret->setPackage(null);
             }
         }
 

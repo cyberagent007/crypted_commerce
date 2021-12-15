@@ -9,7 +9,7 @@
   <div class="col-8">
       <div class="text-center">
         <!-- Product name-->
-        <h5 class="fw-bolder">Special Item</h5>
+        <h5 class="fw-bolder">{{ product.name }}</h5>
         <!-- Product reviews-->
         <div class="d-flex justify-content-center small text-warning mb-2">
           <div class="bi-star-fill"></div>
@@ -19,21 +19,16 @@
           <div class="bi-star-fill"></div>
         </div>
         <!-- Product price-->
-        <span class="text-muted text-decoration-line-through">$20.00</span>
-        $18.00
+        <span class="text-muted text-decoration-line-through">{{ product.priceAmount|format_currency('UAH') }}</span>
+        <div class="text-body">
+          {{ product.description }}
+        </div>
       </div>
     
     
     <!-- Product actions-->
     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-      <select class="form-select" aria-label="Default select example">
-        <option selected>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-      </select>
-      
-      <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Купить</a></div>
+      {{ form(order_form) }}
     </div>
   </div>
 

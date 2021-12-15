@@ -77,6 +77,11 @@ class Secret
      */
     private $description;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Order::class, mappedBy="productSecret", cascade={"persist", "remove"})
+     */
+    private $customerOrder;
+
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
@@ -128,14 +133,14 @@ class Secret
         return $this;
     }
 
-    public function getPackageId(): ?Package
+    public function getPackage(): ?Package
     {
         return $this->package_id;
     }
 
-    public function setPackageId(?Package $package_id): self
+    public function setPackage(?Package $package): self
     {
-        $this->package_id = $package_id;
+        $this->package_id = $package;
 
         return $this;
     }
@@ -176,14 +181,14 @@ class Secret
         return $this;
     }
 
-    public function getDistrictId(): ?District
+    public function getDistrict(): ?District
     {
         return $this->district_id;
     }
 
-    public function setDistrictId(?District $district_id): self
+    public function setDistrict(?District $district): self
     {
-        $this->district_id = $district_id;
+        $this->district_id = $district;
 
         return $this;
     }
@@ -200,14 +205,14 @@ class Secret
         return $this;
     }
 
-    public function getCityId(): ?City
+    public function getCity(): ?City
     {
         return $this->city_id;
     }
 
-    public function setCityId(?City $city_id): self
+    public function setCity(?City $city): self
     {
-        $this->city_id = $city_id;
+        $this->city_id = $city;
 
         return $this;
     }
@@ -220,6 +225,23 @@ class Secret
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCustomerOrder(): ?Order
+    {
+        return $this->customerOrder;
+    }
+
+    public function setCustomerOrder(Order $customerOrder): self
+    {
+        // set the owning side of the relation if necessary
+        if ($customerOrder->getProductSecret() !== $this) {
+            $customerOrder->setProductSecret($this);
+        }
+
+        $this->customerOrder = $customerOrder;
 
         return $this;
     }

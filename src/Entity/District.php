@@ -81,7 +81,7 @@ class District
     {
         if (!$this->secrets->contains($secret)) {
             $this->secrets[] = $secret;
-            $secret->setDistrictId($this);
+            $secret->setDistrict($this);
         }
 
         return $this;
@@ -91,8 +91,8 @@ class District
     {
         if ($this->secrets->removeElement($secret)) {
             // set the owning side to null (unless already changed)
-            if ($secret->getDistrictId() === $this) {
-                $secret->setDistrictId(null);
+            if ($secret->getDistrict() === $this) {
+                $secret->setDistrict(null);
             }
         }
 

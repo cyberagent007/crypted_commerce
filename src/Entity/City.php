@@ -104,7 +104,7 @@ class City
     {
         if (!$this->secrets->contains($secret)) {
             $this->secrets[] = $secret;
-            $secret->setCityId($this);
+            $secret->setCity($this);
         }
 
         return $this;
@@ -114,8 +114,8 @@ class City
     {
         if ($this->secrets->removeElement($secret)) {
             // set the owning side to null (unless already changed)
-            if ($secret->getCityId() === $this) {
-                $secret->setCityId(null);
+            if ($secret->getCity() === $this) {
+                $secret->setCity(null);
             }
         }
 
