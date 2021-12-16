@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6217bdb0badc66d3661f03dea680ebd2",
+    "content-hash": "7ab798d501dfec0ccf72fcc010198e8f",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1915,59 +1915,6 @@
                 }
             ],
             "time": "2021-04-20T19:10:54+00:00"
-        },
-        {
-            "name": "fluffy-factory/user-stats-bundle",
-            "version": "1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fluffy-factory/user-stats-bundle.git",
-                "reference": "a217cbf335281542e07f101e6d07adb86bb3b6fb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fluffy-factory/user-stats-bundle/zipball/a217cbf335281542e07f101e6d07adb86bb3b6fb",
-                "reference": "a217cbf335281542e07f101e6d07adb86bb3b6fb",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2.0"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "installer-name": "UserStatsBundle"
-            },
-            "autoload": {
-                "psr-4": {
-                    "FluffyFactory\\Bundle\\UserStatsBundle\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Devcut",
-                    "email": "guillaume.egloff@gmail.com"
-                }
-            ],
-            "description": "User stats Bundle",
-            "homepage": "https://github.com/fluffy-factory/user-stats-bundle",
-            "keywords": [
-                "bundle",
-                "stats",
-                "symfony",
-                "user"
-            ],
-            "support": {
-                "issues": "https://github.com/fluffy-factory/user-stats-bundle/issues",
-                "source": "https://github.com/fluffy-factory/user-stats-bundle/tree/1.2"
-            },
-            "time": "2021-10-12T09:03:56+00:00"
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
@@ -10792,6 +10739,59 @@
             "time": "2021-10-28T05:46:28+00:00"
         },
         {
+            "name": "fluffy-factory/user-stats-bundle",
+            "version": "1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fluffy-factory/user-stats-bundle.git",
+                "reference": "a217cbf335281542e07f101e6d07adb86bb3b6fb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fluffy-factory/user-stats-bundle/zipball/a217cbf335281542e07f101e6d07adb86bb3b6fb",
+                "reference": "a217cbf335281542e07f101e6d07adb86bb3b6fb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "installer-name": "UserStatsBundle"
+            },
+            "autoload": {
+                "psr-4": {
+                    "FluffyFactory\\Bundle\\UserStatsBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Devcut",
+                    "email": "guillaume.egloff@gmail.com"
+                }
+            ],
+            "description": "User stats Bundle",
+            "homepage": "https://github.com/fluffy-factory/user-stats-bundle",
+            "keywords": [
+                "bundle",
+                "stats",
+                "symfony",
+                "user"
+            ],
+            "support": {
+                "issues": "https://github.com/fluffy-factory/user-stats-bundle/issues",
+                "source": "https://github.com/fluffy-factory/user-stats-bundle/tree/1.2"
+            },
+            "time": "2021-10-12T09:03:56+00:00"
+        },
+        {
             "name": "myclabs/deep-copy",
             "version": "1.10.2",
             "source": {
@@ -11026,6 +11026,66 @@
                 "source": "https://github.com/phpspec/prophecy/tree/1.14.0"
             },
             "time": "2021-09-10T09:02:12+00:00"
+        },
+        {
+            "name": "phpstan/phpstan",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan.git",
+                "reference": "cbe085f9fdead5b6d62e4c022ca52dc9427a10ee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/cbe085f9fdead5b6d62e4c022ca52dc9427a10ee",
+                "reference": "cbe085f9fdead5b6d62e4c022ca52dc9427a10ee",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^8.0"
+            },
+            "conflict": {
+                "phpstan/phpstan-shim": "*"
+            },
+            "bin": [
+                "phpstan",
+                "phpstan.phar"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPStan - PHP Static Analysis Tool",
+            "funding": [
+                {
+                    "url": "https://github.com/ondrejmirtes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/phpstan",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/phpstan",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpstan/phpstan",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-11-18T14:09:01+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -12787,10 +12847,10 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.4.5",
+        "php": ">=7.4",
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "1.1.0"
 }
