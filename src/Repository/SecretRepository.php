@@ -21,6 +21,15 @@ class SecretRepository extends ServiceEntityRepository
         parent::__construct($registry, Secret::class);
     }
 
+    public function findAllSecretsByCity(City $city)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.city_id = :city')
+            ->setParameter('city', $city->getId())
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findAllSecretsByCityAndProduct(City $city, Product $product)
     {
         return $this->createQueryBuilder('s')

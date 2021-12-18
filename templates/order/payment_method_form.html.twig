@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello OrderController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <div class="offset-2 col-8">
+        <div class="row">
+            <div class="text-center">
+                <!-- Product name-->
+                <span class="order-info-label">Product name:</span>
+                <span class="fw-bolder">{{ order.product.name }}</span>
+
+                <span class="order-info-label">Package size (G):</span>
+                <span class="fw-bolder">{{ order.productSecret.package.size }}</span>
+
+                <span class="order-info-label">Order amount:</span>
+                <span class="fw-bolder">{{ order.orderAmount.amount }}</span>
+
+                <span class="order-info-label">Created at:</span>
+                <span class="fw-bolder">{{ order.createdAt }}</span>
+                <!-- Product reviews-->
+
+                <!-- Product price-->
+                <span class="text-muted text-decoration-line-through">{{ product.priceAmount|format_currency('UAH') }}</span>
+                <div class="text-body">
+                    {{ form(paymentMethodForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

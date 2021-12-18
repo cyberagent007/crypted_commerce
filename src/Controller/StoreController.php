@@ -8,11 +8,13 @@ use App\Entity\Product;
 use App\Repository\CityRepository;
 use App\Repository\ProductRepository;
 use App\Repository\SecretRepository;
+use App\Service\OrderService;
 use App\Service\ProductService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,17 +25,20 @@ class StoreController extends AbstractController
     private CityRepository $cityRepository;
     private ProductService $productService;
     private SecretRepository $secretRepository;
+    private OrderService $orderService;
 
     public function __construct(
         ProductRepository $productRepository,
         CityRepository $cityRepository,
         SecretRepository  $secretRepository,
-        ProductService $productService
+        ProductService $productService,
+        OrderService $orderService
     ) {
         $this->cityRepository = $cityRepository;
         $this->productRepository = $productRepository;
         $this->secretRepository = $secretRepository;
         $this->productService = $productService;
+        $this->orderService = $orderService;
     }
 
     /**
@@ -43,6 +48,7 @@ class StoreController extends AbstractController
     {
         $cityCollection = $this->cityRepository->findAll();
         $secretRepository = $this->secretRepository;
+
         array_filter($cityCollection, function ($city) use ($secretRepository) {
             if ($secretRepository->findAllSecretsByCity($city) > 1) {
                 return true;
@@ -76,11 +82,11 @@ class StoreController extends AbstractController
     }
 
     /**
-     * @Route("/store/{id}/product/{item}", name="view_product")
+     * @Route("/store/{id}/product/{item}", name="view_product", methods={"GET", "POST"})
      * @ParamConverter("id", class="App\Entity\City")
      * @ParamConverter("item", class="App\Entity\Product")
      */
-    public function view(City $city, Product $product)
+    public function view(Request $request, City $city, Product $product)
     {
         $secrets = $this->secretRepository->findAllSecretsByCityAndProduct($city, $product);
         $preparedSecrets = $this->productService->groupSecretsByDistrict($secrets);
@@ -95,6 +101,14 @@ class StoreController extends AbstractController
             ])
             ->add('buy', SubmitType::class, ['label' => 'Buy'])
             ->getForm();
+
+        $customerOrderForm->handleRequest($request);
+
+        if ($customerOrderForm->isSubmitted()) {
+            $orderEntity = $this->orderService->createOrder($orderEntity, $this->getUser());
+
+            return new RedirectResponse($this->generateUrl('order_payment_method', ['id' => $orderEntity->getId()]));
+        }
 
         return $this->render('store/product.html.twig', [
             'product' => $product,

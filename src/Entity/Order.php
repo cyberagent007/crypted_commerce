@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\OrderRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Money\Currency;
+use Money\Money;
 
 /**
  * @ORM\Entity(repositoryClass=OrderRepository::class)
@@ -11,6 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Order
 {
+    const STATUS_CREATED = 'created';
+    const STATUS_PAID = 'paid';
+    const STATUS_CLOSED = 'closed';
+    const STATUS_PROBLEM = 'problem';
+    const STATUS_REFUND = 'refund';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -20,7 +28,7 @@ class Order
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="orders")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $client;
 
@@ -31,12 +39,12 @@ class Order
     private $product;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $paymentType;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $walletAddress;
 
@@ -56,10 +64,25 @@ class Order
      */
     private $productSecret;
 
+    /**
+     * @ORM\Column(type="integer", length=10)
+     */
+    private $orderAmount;
+
+    /**
+     * @ORM\OneToOne(targetEntity=BitcoinWallet::class, mappedBy="customerOrder", cascade={"persist", "remove"})
+     */
+    private $bitcoinWallet;
+
+    /**
+     * @ORM\OneToOne(targetEntity=EasyPayWallet::class, mappedBy="customerOrder", cascade={"persist", "remove"})
+     */
+    private $easyPayWallet;
+
     public function __construct()
     {
-        $this->paymentType = 'easypay';
-        $this->status = 'created';
+        $this->paymentType = '';
+        $this->status = self::STATUS_CREATED;
         $this->createdAt = new \DateTimeImmutable();
     }
 
@@ -148,6 +171,69 @@ class Order
     public function setProductSecret(Secret $productSecret): self
     {
         $this->productSecret = $productSecret;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrderAmount(): Money
+    {
+        return new Money($this->orderAmount, new Currency('UAH'));
+    }
+
+    /**
+     * @param mixed $orderAmount
+     * @return Order
+     */
+    public function setOrderAmount(Money $orderAmount): self
+    {
+        $this->orderAmount = $orderAmount->getAmount();
+
+        return $this;
+    }
+
+    public function getBitcoinWallet(): ?BitcoinWallet
+    {
+        return $this->bitcoinWallet;
+    }
+
+    public function setBitcoinWallet(?BitcoinWallet $bitcoinWallet): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($bitcoinWallet === null && $this->bitcoinWallet !== null) {
+            $this->bitcoinWallet->setCustomerOrder(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($bitcoinWallet !== null && $bitcoinWallet->getCustomerOrder() !== $this) {
+            $bitcoinWallet->setCustomerOrder($this);
+        }
+
+        $this->bitcoinWallet = $bitcoinWallet;
+
+        return $this;
+    }
+
+    public function getEasyPayWallet(): ?EasyPayWallet
+    {
+        return $this->easyPayWallet;
+    }
+
+    public function setEasyPayWallet(?EasyPayWallet $easyPayWallet): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($easyPayWallet === null && $this->easyPayWallet !== null) {
+            $this->easyPayWallet->setCustomerOrder(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($easyPayWallet !== null && $easyPayWallet->getCustomerOrder() !== $this) {
+            $easyPayWallet->setCustomerOrder($this);
+        }
+
+        $this->easyPayWallet = $easyPayWallet;
 
         return $this;
     }
